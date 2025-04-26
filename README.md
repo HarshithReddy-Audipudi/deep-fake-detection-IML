@@ -91,3 +91,15 @@ Example Visualization:
 ---
 
 ## 📋 Project Folder Structure
+Deepfake-Detection-Project/
+│
+├── Final_Notebook.ipynb           # Complete notebook with all experiments
+├── models/                        # Saved model weights
+│   ├── resnet50_deepfake.pth
+│   ├── xceptionnet_deepfake.pth
+│   ├── lrnet_deepfake.pth
+│   ├── mobilevit_s_deepfake.pth
+├── visuals/                       # (Optional) Saved GradCAM images
+├── dataset/                       # (Optional) Sample dataset files
+├── README.md                       # This file
+└── requirements.txt                # Required packages
