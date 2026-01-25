@@ -1,92 +1,124 @@
-# 🧠 Deepfake Detection using ResNet, XceptionNet, LRNet, and MobileViT
+# 🧠 Deepfake Detection for Electoral Integrity
 
-![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
-![PyTorch](https://img.shields.io/badge/PyTorch-1.9+-red.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
+A **multi‑model computer vision system** designed to detect synthetic media in election‑related content using CNN and transformer‑based architectures. This project combines deep learning, explainable AI (Grad‑CAM), and real‑world security applications.
 
 ---
 
-## 📚 Project Overview
+## 📌 Project Overview
 
-This project focuses on the **detection of deepfake images** using multiple deep learning architectures.  
-The models used are **ResNet50**, **XceptionNet**, **LRNet** (a lightweight CNN), and **MobileViT** (a hybrid CNN+Transformer model).
+As synthetic media becomes increasingly sophisticated and politically weaponized, this project provides a **comparative framework** for detecting deepfake images using state‑of‑the‑art models. The system evaluates traditional CNNs (ResNet‑50, XceptionNet) alongside modern hybrid architectures (MobileViT) on a curated dataset of real and fake facial images.
 
-We also employ **GradCAM visualizations** to **interpret model decisions**, offering insights into which image regions the models focus on when classifying an image as real or fake.
-
-This project is a complete academic-style study:
-- Model training and evaluation
-- Attention visualization (GradCAM)
-- Result comparison
-- Conclusions and recommendations
+**Core objectives:**
+- Detect deepfake images with high accuracy
+- Compare CNN‑based and transformer‑based models
+- Interpret model decisions using Grad‑CAM attention visualization
+- Provide actionable insights for election‑security applications
 
 ---
 
-## 🎯 Objectives
+## 🏗️ Architecture
 
-- Detect deepfake images with high accuracy.
-- Compare traditional CNNs and Transformer-based models.
-- Visualize attention areas using GradCAM.
-- Analyze model performance (Accuracy, Precision, Recall).
-- Recommend the best architecture for real-world deployment.
-
----
-
-## 🏗️ Models Used
-
-| Model | Description |
-|------|-------------|
-| **ResNet50** | Residual learning CNN with skip connections (strong baseline) |
-| **XceptionNet** | Extreme Inception architecture with depthwise separable convolutions |
-| **LRNet** | Custom lightweight CNN (fast and simple) |
-| **MobileViT** | Hybrid CNN-Transformer architecture optimized for mobile devices |
+| Model | Type | Key Features | Best Accuracy |
+|-------|------|--------------|---------------|
+| **ResNet‑50** | CNN | Residual learning, skip connections | **91%** |
+| **XceptionNet** | CNN | Depthwise separable convolutions | 88% |
+| **MobileViT** | CNN‑Transformer Hybrid | Mobile‑optimized, global attention | 86% |
+| **LRNet (Lightweight)** | Custom CNN | Fast inference, low params | 59% |
 
 ---
 
-## 📂 Dataset
+## 📊 Results
 
-- **Custom Rebuilt Dataset**: 
-  - Collected **Real** and **Fake** face images.
-  - Approximately **2000 images** sampled for efficient training.
-  - Balanced classes (Real = Fake).
-  - Preprocessing:
-    - Resize to 224x224 (CNNs) or 256x256 (MobileViT) or 299x299 (Xception).
-    - Normalization between [-1, 1].
-- **Train/Test Split**:
-  - 80% for training
-  - 20% for testing
-  - Stratified split based on labels
+### Performance Metrics
+| Model | Accuracy | Precision (Fake) | Recall (Fake) |
+|-------|----------|------------------|---------------|
+| ResNet‑50 | **91%** | 88% | 97% |
+| XceptionNet | 88% | **92%** | 93% |
+| MobileViT | 86% | 90% | 95% |
+| LRNet | 59% | 59% | 73% |
 
----
-
-## 📊 Results Summary
-
-| Model         | Accuracy | Precision (Fake) | Recall (Fake) |
-|---------------|----------|------------------|---------------|
-| ResNet50      | 91%      | 88%               | 97%           |
-| XceptionNet   | 88%      | 92%               | 93%           |
-| LRNet         | 59%      | 59%               | 73%           |
-| MobileViT     | 86%      | 90%               | 95%           |
-
-✅ **ResNet and MobileViT** gave consistently high results.  
-✅ **XceptionNet** showed strong precision.  
-✅ **LRNet**, though faster, struggled with generalization.
+### Key Findings
+1. **ResNet‑50** consistently delivered the highest accuracy and recall
+2. **XceptionNet** showed the best precision (lowest false positives)
+3. **MobileViT** balanced accuracy with modern architecture benefits
+4. **LRNet**, while fastest, struggled with generalization
 
 ---
 
-## 🎨 GradCAM Visualizations
+## 🔍 Model Interpretability with Grad‑CAM
 
-GradCAM was applied on each model to visualize **attention heatmaps**:
+Grad‑CAM visualizations reveal where each model "looks" when classifying images:
 
-- 🔵 **ResNet50**: Focused on facial outlines and artifacts.
-- 🔵 **XceptionNet**: Sharply highlighted eye and mouth regions.
-- 🔵 **LRNet**: Focused inconsistently — less reliable.
-- 🔵 **MobileViT**: Captured detailed features like nose and mouth structures.
+- **ResNet‑50**: Focuses on facial outlines and edge artifacts
+- **XceptionNet**: Sharply highlights eyes, mouth, and eyebrow regions
+- **MobileViT**: Captures detailed facial structures (nose, mouth contours)
+- **LRNet**: Shows inconsistent, scattered attention patterns
 
-These visualizations helped interpret **how models detect fake regions** inside faces.
-
-Example Visualization:
-- Red → High attention
-- Blue → Low attention
+These visualizations help **explain model decisions** and identify manipulated regions.
 
 ---
 
+## 🗂️ Dataset
+
+- **Source**: Custom‑collected real and synthetic face images
+- **Size**: ~2,000 images (balanced real/fake)
+- **Preprocessing**:
+  - Resize: 224×224 (ResNet, MobileViT), 299×299 (Xception)
+  - Normalization: ImageNet mean/std or [‑1, 1] scaling
+  - Augmentation: Random flip, rotation, brightness adjustment
+- **Split**: 80% training, 20% testing (stratified)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+```bash
+Python 3.8+
+PyTorch 1.12+
+torchvision
+OpenCV
+matplotlib
+numpy
+
+# Clone the repository
+git clone https://github.com/yourusername/deepfake-election-detection.git
+cd deepfake-election-detection
+
+# Install dependencies
+pip install -r requirements.txt
+
+
+# Load trained model
+from inference import DeepfakeDetector
+detector = DeepfakeDetector(model_type='resnet50', weights_path='weights/resnet50_best.pth')
+
+# Predict on single image
+prediction, confidence = detector.predict('path/to/image.jpg')
+
+# Generate Grad-CAM visualization
+detector.visualize_attention('path/to/image.jpg', output_path='heatmap.png')
+
+
+deepfake-election-detection/
+├── data/
+│   ├── processed/          # Preprocessed datasets
+│   └── raw/               # Original images
+├── models/
+│   ├── resnet_model.py
+│   ├── xception_model.py
+│   ├── mobilevit_model.py
+│   └── lrnet_model.py
+├── notebooks/
+│   ├── 01_data_exploration.ipynb
+│   ├── 02_model_training.ipynb
+│   └── 03_visualization.ipynb
+├── utils/
+│   ├── dataset.py
+│   ├── visualization.py
+│   └── metrics.py
+├── weights/               # Trained model checkpoints
+├── train.py
+├── inference.py
+├── requirements.txt
+└── README.md
