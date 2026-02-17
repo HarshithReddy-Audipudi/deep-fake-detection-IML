@@ -88,3 +88,95 @@ This bridges black-box classification with interpretable, actionable reporting.
 git clone https://github.com/yourusername/deepfake-election-detection.git
 cd deepfake-election-detection
 pip install -r requirements.txt
+
+
+## 2️⃣ Explainability Layer (GradCAM)
+
+To increase transparency and trust in model predictions, the system integrates **GradCAM (Gradient-weighted Class Activation Mapping)** to visualize the regions influencing classification decisions.
+
+### Why GradCAM?
+
+Deepfake detection models can behave like black boxes. GradCAM helps:
+
+- Highlight manipulated regions (face blending edges, texture artifacts)
+- Reveal model attention patterns
+- Diagnose false positives and false negatives
+- Improve interpretability for forensic analysis
+
+### Observations Across Models
+
+- **ResNet-50** → Focuses on facial outlines and boundary blending artifacts  
+- **XceptionNet** → Strong attention around eyes, mouth, and eyebrow regions  
+- **MobileViT** → Captures global structural inconsistencies  
+- **LRNet** → Shows scattered and less stable attention patterns  
+
+These visualizations are later fused into the forensic reporting pipeline.
+
+---
+
+## 3️⃣ RAG-Enhanced Forensic Attribution Pipeline
+
+Beyond classification, this system introduces a lightweight **Retrieval-Augmented Generation (RAG)** workflow to enhance interpretability.
+
+Instead of outputting only:
+> "Fake (Confidence: 0.92)"
+
+The system generates a structured forensic report.
+
+### 🔹 Step 1: Evidence Extraction
+
+- Model prediction score
+- GradCAM attention heatmaps
+- Detected artifact regions (boundary inconsistencies, unnatural textures)
+
+### 🔹 Step 2: Threat Intelligence Retrieval
+
+A curated knowledge base contains manipulation signatures such as:
+
+- Face-swap blending artifacts  
+- GAN texture fingerprints  
+- Lighting inconsistencies  
+- Facial asymmetry distortions  
+
+The system retrieves relevant artifact patterns based on extracted visual evidence.
+
+### 🔹 Step 3: Structured Report Generation
+
+The final output includes:
+
+- Classification result  
+- Confidence score  
+- Highlighted manipulated regions  
+- Likely artifact category  
+- Automated citation references to retrieved patterns  
+
+This bridges deep learning outputs with explainable forensic reasoning.
+
+---
+
+## 4️⃣ Experimental Results
+
+The system benchmarks multiple architectures for detecting manipulated political media.
+
+### 📊 Model Performance
+
+| Model        | Accuracy | Precision (Fake) | Recall (Fake) |
+|--------------|----------|------------------|---------------|
+| ResNet-50   | **91%**  | 88%              | 97%           |
+| XceptionNet | 88%      | **92%**          | 93%           |
+| MobileViT   | 86%      | 90%              | 95%           |
+| LRNet       | 59%      | 59%              | 73%           |
+
+### 🔎 Key Findings
+
+- **ResNet-50** achieved the highest overall accuracy  
+- **XceptionNet** achieved the highest precision (lowest false positives)  
+- **MobileViT** balanced performance with modern hybrid architecture  
+- Precision improved by **14%** compared to baseline configuration  
+
+### 🧠 Insights
+
+- CNN architectures remain strong for curated deepfake datasets  
+- Transformer hybrids help capture global structural inconsistencies  
+- GradCAM significantly improves interpretability and trust  
+- RAG-enhanced attribution provides explainability beyond raw probabilities  
